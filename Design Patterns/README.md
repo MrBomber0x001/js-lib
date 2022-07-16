@@ -5,7 +5,7 @@
 I've used these main resources while studying and implementing design patterns
 
 - Javascript Design patterns - Book
-- Javascript Pattens 
+- Javascript Pattens
 - Refactor Guru
 - Head first Design Patterns
   **hint**:
@@ -18,11 +18,9 @@ I've included notes about each `pattern` so give them a look!
 
 Object Oriented Programming with JS!
 
-
-
 ## Contents
 
-- Singletong
+- Singleton
 
 - factroy
 
