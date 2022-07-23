@@ -13,6 +13,8 @@ JS concepts library.
 
 - [ ] Functional Programming in Js in action, manning pub :book:(I guess from my point of view, this is the best resource I've used)
 
+- [ ] <https://leanpub.com/javascriptallongesix/read#leanpub-auto-a-pull-of-the-lever-prefaces>
+
 ### OOP
 
 - [ ] Javascript Object Oriented Programming, Nickolas Zakas :book: (Discess ES5 way of implementing object Oriented paradigm)
