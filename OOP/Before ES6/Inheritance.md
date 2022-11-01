@@ -192,3 +192,112 @@ Square.prototype.toString = function () {
 };
 
 ```
+
+--------------------------------------------------------------
+/**Inheritance**/
+function Animal(name, energy) {
+ this.name = name;
+ this.energy = energy;
+}
+Animal.prototype.play = function (argument) {
+ // body...
+}
+Animal.prototype.method_name = function(first_argument) {
+ // body...
+};
+
+function Dog(name, energy, breed) {
+ this.breed = breed;
+}
+
+Dog.prototype.method_name = function(first_argument) {
+ // body...
+};
+Dog.prototype.bark = function(){
+ console.log(`Woof Woof`);
+ this.energy -= .1;
+}
+
+const charlie = new Dog('Charlie', 10, 'goldendoodle')
+
+//what if we've 10m classes?
+function Cat(){}
+function Giraffe(){}
+function Lion(){}
+// wasteful right!, we can refactor this
+// what we need is to call the constructor Animal function inside Dog
+// so we need to invoke animal in the context of Dog. remember?
+// so when the animal function runs, this inside it will refers to the Dog
+function Dog(name, energy, breed){
+ // this = Object.create(Dog.prototype); Dog.prototype = Object.create(Animal.prototype);
+ Animal.call(this, name, energy);
+
+ this.breed = breed;
+}
+
+const charlie = new Dog('Charlie', 10, 'goldendoodle');
+console.log(charlie.eat()); //undefined? what ?why?
+
+// we need to share the animal prototype, to do so we'll be using Object.creat();
+// what Object.creat() actually does is to delegate to another object on failed lookups, this means the following
+// when the Javascript Engine can't see any methods on charlie, he will delegate to further object which is the prototype of Dog which is now pointing to the Animal Prototype
+
+Dog.prototype = Object.create(Animal.prototype);
+
+Dog.prototype.bark = function(){
+ console.log('Woof Woof');
+ this.energy -= .1
+}
+
+console.log(charlie instanceof Animal); //true;
+console.log(charlie.constructor) // Animal? why? it should be Dog
+// because we've reset the prototype of Dog to the prototype of Animal
+// what can we do? we need to reset the constructor property on Dog
+Dog.prototype.constructor = Dog;
+
+// we can use a mixin function to prevent the repetitive code
+function mixin(parent, child){
+ child.prototype = Object.create(parent.prototype);
+ child.prototype.constructor = child;
+}
+function Cat(name, energy, declawed){
+ Animal.call(this, name, energy);
+ this.declawed = declawed;
+}
+mixin(Animal, Cat)
+
+// in ES6, we've classes
+// class is really [syntactic sugar over constructor function and prototypical inheritance]
+
+class Animal {
+
+ constructor(name, energy) {
+  this.name = name;
+  this.energy = energy;
+ }
+
+ eat(amount) {
+  console.log(`${this.name} is eating`);
+  this.energy += amount
+ }
+ sleep(length) {
+  console.log(`${this.name} is sleeping`);
+  this.energy += length
+ }
+ play() {
+  console.log(`${this.name} is playing`);
+  this.energy -= length
+ }
+}
+
+class Dog extends Animal{
+ constructor(name, energy, breed){
+  super(name, energy);
+  this.breed = breed;
+ }
+
+ bark(){
+  console.log('Woof Woof');
+  this.energy -= .1;
+ }
+}

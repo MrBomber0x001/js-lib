@@ -1,4 +1,3 @@
-
 ## Classes
 
 classes are just sytatic sugar over prototypical inheritance
